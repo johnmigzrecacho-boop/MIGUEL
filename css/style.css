@@ -1,0 +1,2055 @@
+/* ==========================================================================
+   ANTONIO VEGA — PORTFOLIO DESIGN SYSTEM & STYLESHEET
+   High-Contrast Luxury Editorial Architecture & Creative Direction
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Google Fonts Import
+   -------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@500;700;800&display=swap');
+
+/* --------------------------------------------------------------------------
+   Design Tokens & CSS Variables
+   -------------------------------------------------------------------------- */
+:root {
+  --bg-pure: #060608;
+  --bg-primary: #0b0b0e;
+  --bg-secondary: #121217;
+  --bg-elevated: #1a1a22;
+  --bg-card: rgba(22, 22, 28, 0.65);
+  --bg-card-hover: rgba(30, 30, 38, 0.85);
+
+  --text-primary: #fbfbfb;
+  --text-secondary: #b5b5c2;
+  --text-muted: #6e6e7d;
+  --text-dim: #444450;
+
+  --accent-white: #ffffff;
+  --accent-gold: #e5b974;
+  --accent-glow: rgba(255, 255, 255, 0.35);
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.16);
+  --border-strong: rgba(255, 255, 255, 0.4);
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-heading: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-editorial: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --container-max: 1480px;
+  --nav-width: 170px;
+  --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-duration: 0.35s;
+
+  --dim-filter: grayscale(100%) brightness(0.3) contrast(0.85);
+  --dim-opacity: 0.25;
+}
+
+/* --------------------------------------------------------------------------
+   Reset & Base Styles
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+  font-size: 16px;
+  background-color: var(--bg-pure);
+}
+
+body {
+  background-color: var(--bg-pure);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Film Grain Texture Overlay for Museum / Editorial Feel */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.7;
+}
+
+/* Selection Color */
+::selection {
+  background: var(--text-primary);
+  color: var(--bg-pure);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all var(--transition-duration) var(--transition-smooth);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ==========================================================================
+   IRON MAN CUSTOM CURSORS
+   - Red aerodynamic Iron Man pointer default
+   - Iron Man armored gauntlet hand with glowing repulsor palm on hover
+   ========================================================================== */
+html, body, * {
+  cursor: url('../assets/cursor-pointer.svg') 4 2, auto;
+}
+
+a, button, [role="button"], input, select, textarea, .btn, .interactive-target, 
+.side-nav-link, .work-filter-btn, .sub-work-card, .talk-item, .open-case-study-btn, 
+.nano-audio-btn, .nano-hud-close, .nano-engage-btn, .modal-close-btn, [data-preview] {
+  cursor: url('../assets/cursor-hand.svg') 8 2, pointer !important;
+}
+
+/* Iron Man HUD Cursor Reticle Follower */
+.iron-man-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.cursor-repulsor-core {
+  position: absolute;
+  inset: 9px;
+  border-radius: 50%;
+  background: #00f0ff;
+  box-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;
+  opacity: 0.65;
+  transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.cursor-reticle {
+  position: absolute;
+  inset: 0;
+  border: 1px dashed rgba(230, 26, 41, 0.7);
+  border-radius: 50%;
+  animation: reticle-spin 10s linear infinite;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+@keyframes reticle-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Hovering interactive items transforms cursor HUD */
+body.cursor-hover .cursor-repulsor-core {
+  background: #ffd700;
+  box-shadow: 0 0 15px #ffd700, 0 0 30px #00f0ff;
+  transform: scale(1.4);
+  opacity: 1;
+}
+
+body.cursor-hover .cursor-reticle {
+  border-color: rgba(0, 240, 255, 0.95);
+  border-style: solid;
+  transform: scale(1.25);
+}
+
+/* --------------------------------------------------------------------------
+   FULL-SCREEN IRON MAN NANOTECH ARMOR TRANSITION OVERLAY (Fires on Click)
+   "make it that when i click the buttons, it transitions like a nanotech"
+   -------------------------------------------------------------------------- */
+.nanotech-transition-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 3500;
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   IRON MAN BACKGROUND BLUEPRINTS & HOLOGRAPHIC MOTIFS
+   -------------------------------------------------------------------------- */
+.hero-ironman-blueprint {
+  position: absolute;
+  right: 2%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 720px;
+  height: 720px;
+  pointer-events: none;
+  opacity: 0.28;
+  mix-blend-mode: screen;
+  z-index: 2;
+  filter: drop-shadow(0 0 25px rgba(0, 240, 255, 0.3));
+}
+
+.ironman-blueprint-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: blueprint-slow-spin 80s linear infinite;
+}
+
+@keyframes blueprint-slow-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.section-ironman-watermark {
+  position: absolute;
+  right: -80px;
+  top: 15%;
+  width: 650px;
+  height: 650px;
+  pointer-events: none;
+  opacity: 0.14;
+  mix-blend-mode: screen;
+  z-index: 1;
+}
+
+.ironman-watermark-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: blueprint-counter-spin 100s linear infinite;
+}
+
+@keyframes blueprint-counter-spin {
+  0% { transform: rotate(360deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* --------------------------------------------------------------------------
+   STEALTH SCROLLING NANOBOT WAVE TRANSITION (Low Glare / Dark Fluid Nanobots)
+   "put less light and more of like wave and scrollling of nanobots"
+   -------------------------------------------------------------------------- */
+.nanotech-transition-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 3500;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.nanotech-transition-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Dark metallic nanite wave - subtle, non-glaring */
+.nano-shockwave {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--click-x, 50%) var(--click-y, 50%), 
+    rgba(14, 18, 28, 0.88) 0%, 
+    rgba(8, 9, 14, 0.95) 45%, 
+    transparent 85%
+  );
+  opacity: 0;
+}
+
+.nanotech-transition-overlay.active .nano-shockwave {
+  animation: nanobot-wave-expansion 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes nanobot-wave-expansion {
+  0% { transform: scale(0.2); opacity: 0.9; }
+  60% { opacity: 0.85; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+/* Scrolling Hexagonal Nanobots Wave */
+.nano-hex-matrix {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(rgba(0, 240, 255, 0.22) 1px, transparent 1px),
+    linear-gradient(rgba(230, 26, 41, 0.08) 1px, transparent 1px),
+    radial-gradient(rgba(255, 215, 0, 0.15) 1px, transparent 1px);
+  background-size: 20px 20px, 40px 40px, 60px 60px;
+  background-position: 0 0;
+  opacity: 0;
+}
+
+.nanotech-transition-overlay.active .nano-hex-matrix {
+  animation: nanobot-scrolling-swarm 0.75s ease-out forwards;
+}
+
+@keyframes nanobot-scrolling-swarm {
+  0% { 
+    opacity: 0; 
+    background-position: 0 -200px;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+  30% { 
+    opacity: 0.9; 
+    clip-path: polygon(0 0, 100% 0, 100% 55%, 0 45%);
+  }
+  70% { 
+    opacity: 0.7; 
+    background-position: 0 400px;
+    clip-path: polygon(0 30%, 100% 40%, 100% 100%, 0 100%);
+  }
+  100% { 
+    opacity: 0; 
+    background-position: 0 800px;
+    clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+  }
+}
+
+/* Subtle dark liquid nanite wave sheet */
+.nano-laser-sweep {
+  position: absolute;
+  top: -50%;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  background: linear-gradient(
+    180deg, 
+    transparent 0%, 
+    rgba(0, 240, 255, 0.08) 35%, 
+    rgba(14, 18, 28, 0.75) 48%, 
+    rgba(230, 26, 41, 0.15) 52%, 
+    transparent 70%
+  );
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nanotech-transition-overlay.active .nano-laser-sweep {
+  animation: nanobot-wave-wash 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes nanobot-wave-wash {
+  0% { transform: translateY(-40%); opacity: 0.8; }
+  100% { transform: translateY(60%); opacity: 0; }
+}
+
+.nano-transition-label {
+  position: absolute;
+  bottom: 3.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--nano-cyan);
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+  opacity: 0;
+}
+
+.nanotech-transition-overlay.active .nano-transition-label {
+  animation: label-pop 0.65s ease-out forwards;
+}
+
+/* --------------------------------------------------------------------------
+   Dedicated Nanobot Wave Seam (Between About & Skills)
+   -------------------------------------------------------------------------- */
+.nanobot-wave-transition {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(180deg, var(--bg-pure) 0%, #050609 50%, var(--bg-pure) 100%);
+  border-top: 1px solid rgba(0, 240, 255, 0.12);
+  border-bottom: 1px solid rgba(0, 240, 255, 0.12);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nanobot-stream-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.nanobot-wave-telemetry {
+  position: relative;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: rgba(10, 12, 18, 0.8);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  padding: 0.45rem 1.25rem;
+  border-radius: 100px;
+  backdrop-filter: blur(10px);
+}
+
+.nano-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--nano-cyan);
+  box-shadow: 0 0 8px var(--nano-cyan);
+  animation: pulse-dot 1.8s infinite;
+}
+
+.nano-telemetry-text {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--text-secondary);
+}
+
+.nanotech-transition-overlay.active .nano-transition-label {
+  animation: label-pop 0.55s ease-out forwards;
+}
+
+@keyframes label-pop {
+  0% { opacity: 0; transform: translate(-50%, 15px); }
+  30% { opacity: 1; transform: translate(-50%, 0); }
+  75% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -12px); }
+}
+
+/* Ambient Backdrop when Nanotech HUD is engaged */
+.nanotech-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 5, 8, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 2400;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.nanotech-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* --------------------------------------------------------------------------
+   Interactive Target & Button Styling (Clean Hover, Intense Click)
+   -------------------------------------------------------------------------- */
+.interactive-target {
+  position: relative;
+  transition: transform 0.25s var(--transition-smooth), 
+              box-shadow 0.25s var(--transition-smooth),
+              color 0.25s ease,
+              border-color 0.25s ease;
+}
+
+.interactive-target:hover {
+  transform: translateY(-2px);
+}
+
+.btn:hover {
+  border-color: var(--nano-cyan);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.35);
+}
+
+/* Button Active Nanotech Click Ripple */
+.interactive-target:active {
+  transform: scale(0.97);
+  box-shadow: 0 0 35px var(--nano-cyan), 0 0 70px rgba(255, 215, 0, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   Typography Utilities
+   -------------------------------------------------------------------------- */
+.editorial-title {
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 13vw, 13rem);
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  user-select: none;
+}
+
+.section-tag {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.section-tag::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background-color: var(--text-muted);
+}
+
+.editorial-quote {
+  font-family: var(--font-editorial);
+  font-size: clamp(1.4rem, 2.4vw, 2.15rem);
+  font-weight: 300;
+  line-height: 1.45;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.editorial-caption {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Header & Top Bar
+   -------------------------------------------------------------------------- */
+.top-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.75rem 3.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 90;
+  background: linear-gradient(180deg, rgba(6, 6, 8, 0.95) 0%, rgba(6, 6, 8, 0) 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.brand-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  box-shadow: 0 0 10px #22c55e;
+  animation: pulse-dot 2.5s infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.85); }
+}
+
+.status-text {
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.top-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2.25rem;
+}
+
+.top-nav-links a {
+  font-family: var(--font-editorial);
+  font-size: 1.15rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  position: relative;
+  padding: 0.2rem 0;
+}
+
+.top-nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 1px;
+  background-color: var(--text-primary);
+  transition: width 0.3s var(--transition-smooth);
+}
+
+.top-nav-links a:hover {
+  color: var(--text-primary);
+}
+
+.top-nav-links a:hover::after {
+  width: 100%;
+}
+
+.header-action-group {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* Feature indicator badge */
+.spotlight-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  padding: 0.4rem 0.85rem;
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.spotlight-indicator .mini-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   Sticky Right Navigation Column (Matches Hostinger Template Reference)
+   -------------------------------------------------------------------------- */
+.side-nav-container {
+  position: fixed;
+  right: 3.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 85;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1.6rem;
+}
+
+.side-nav-link {
+  font-family: var(--font-editorial);
+  font-size: 1.25rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.25rem 0;
+  transition: color 0.3s ease, transform 0.3s var(--transition-smooth);
+}
+
+.side-nav-link .nav-marker {
+  width: 0px;
+  height: 1px;
+  background-color: var(--text-primary);
+  transition: width 0.3s var(--transition-smooth);
+  order: 2;
+}
+
+.side-nav-link:hover,
+.side-nav-link.active {
+  color: var(--text-primary);
+  transform: translateX(-4px);
+}
+
+.side-nav-link.active {
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1.5px;
+}
+
+.side-nav-link.active .nav-marker {
+  width: 18px;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons & Interactive Elements
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  padding: 0.95rem 2.2rem;
+  border-radius: 2px;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  cursor: pointer;
+  outline: none;
+  background: none;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s var(--transition-smooth);
+}
+
+.btn-primary {
+  background-color: var(--text-primary);
+  color: var(--bg-pure);
+  border-color: var(--text-primary);
+}
+
+.btn-primary:hover {
+  background-color: #ffffff;
+  color: #000000;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+  backdrop-filter: blur(8px);
+}
+
+.btn-outline:hover {
+  border-color: var(--text-primary);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.btn-text-link {
+  padding: 0.5rem 0;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  position: relative;
+}
+
+.btn-text-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--text-primary);
+  transition: transform 0.3s var(--transition-smooth);
+  transform-origin: left;
+}
+
+.btn-text-link:hover::after {
+  transform: scaleX(0.7);
+}
+
+/* --------------------------------------------------------------------------
+   Hero Section (Reference Image 1 Replica & Elevation)
+   -------------------------------------------------------------------------- */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 8rem 3.5rem 4.5rem;
+  overflow: hidden;
+  background-color: var(--bg-pure);
+}
+
+/* Hero Portrait Background with high-contrast chiaroscuro blending */
+.hero-bg-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 60% 30%;
+  filter: contrast(110%) brightness(88%);
+}
+
+/* Dark Vignette Gradients for Legibility & Cinema Look */
+.hero-bg-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(90deg, #060608 0%, rgba(6, 6, 8, 0.88) 32%, rgba(6, 6, 8, 0.2) 65%, #060608 100%),
+    linear-gradient(180deg, rgba(6, 6, 8, 0.5) 0%, transparent 35%, rgba(6, 6, 8, 0.95) 90%, #060608 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  max-width: 900px;
+}
+
+.hero-headline {
+  margin-bottom: 2rem;
+}
+
+.hero-bio-snippet {
+  font-family: var(--font-editorial);
+  font-size: clamp(1.2rem, 1.9vw, 1.65rem);
+  font-weight: 300;
+  line-height: 1.45;
+  color: var(--text-secondary);
+  max-width: 680px;
+  margin-bottom: 2.75rem;
+}
+
+.hero-cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.hero-bottom-ticker {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 3.5rem;
+  border-top: 1px solid var(--border-subtle);
+  margin-top: 4rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.ticker-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.ticker-item::before {
+  content: '/';
+  color: var(--text-dim);
+}
+
+.ticker-item:first-child::before {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Main Content Layout & Section Structure
+   -------------------------------------------------------------------------- */
+.main-wrapper {
+  position: relative;
+  z-index: 10;
+  padding-right: var(--nav-width); /* Space for sticky right nav */
+}
+
+.content-section {
+  padding: 9rem 3.5rem;
+  position: relative;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.section-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   About Section (Reference Image 2 Replica & Elevation)
+   -------------------------------------------------------------------------- */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 5.5rem;
+  align-items: center;
+}
+
+.about-media-block {
+  position: relative;
+}
+
+.about-image-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background-color: var(--bg-secondary);
+}
+
+.about-image-frame img {
+  width: 100%;
+  height: 540px;
+  object-fit: cover;
+  filter: contrast(115%) grayscale(100%);
+  transition: transform 0.8s var(--transition-smooth), filter 0.8s var(--transition-smooth);
+}
+
+.about-image-frame:hover img {
+  transform: scale(1.03);
+  filter: contrast(120%) grayscale(80%);
+}
+
+.about-image-caption {
+  margin-top: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.about-editorial-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about-main-text {
+  margin-bottom: 2rem;
+}
+
+.about-sub-narrative {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 3rem;
+}
+
+.metrics-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding: 2.25rem 0;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 2.5rem;
+}
+
+.metric-number {
+  font-family: var(--font-display);
+  font-size: 3.25rem;
+  line-height: 1;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+}
+
+.metric-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Skills & Disciplines Section
+   -------------------------------------------------------------------------- */
+.skills-header-block {
+  max-width: 800px;
+  margin-bottom: 4.5rem;
+}
+
+.skills-main-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 3.5vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.skill-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  padding: 2.75rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 310px;
+  transition: all 0.35s var(--transition-smooth);
+}
+
+.skill-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-strong);
+  transform: translateY(-4px);
+}
+
+.skill-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1.5rem;
+}
+
+.skill-index {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+}
+
+.skill-title {
+  font-family: var(--font-heading);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.skill-desc {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.75rem;
+}
+
+.skill-tag-pill {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  padding: 0.35rem 0.75rem;
+  border-radius: 100px;
+}
+
+/* --------------------------------------------------------------------------
+   Selected Work / Portfolio Repertoire Section
+   -------------------------------------------------------------------------- */
+.work-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 1rem;
+  overflow-x: auto;
+}
+
+.work-filter-btn {
+  background: none;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.5rem 0;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.work-filter-btn.active,
+.work-filter-btn:hover {
+  color: var(--text-primary);
+}
+
+.work-filter-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1rem;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--text-primary);
+}
+
+.featured-work-card {
+  position: relative;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-secondary);
+  overflow: hidden;
+  margin-bottom: 4rem;
+}
+
+.featured-work-banner {
+  width: 100%;
+  height: 640px;
+  position: relative;
+  overflow: hidden;
+}
+
+.featured-work-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  filter: contrast(110%) grayscale(100%);
+  transition: transform 0.8s var(--transition-smooth), filter 0.8s var(--transition-smooth);
+}
+
+.featured-work-card:hover .featured-work-banner img {
+  transform: scale(1.02);
+  filter: contrast(115%) grayscale(40%);
+}
+
+.featured-work-info {
+  padding: 2.75rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  background: var(--bg-primary);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.project-meta-pill {
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin-bottom: 0.6rem;
+  display: inline-block;
+}
+
+.project-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.project-summary {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 620px;
+}
+
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+}
+
+.sub-work-card {
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 280px;
+  transition: all 0.35s var(--transition-smooth);
+}
+
+.sub-work-card:hover {
+  border-color: var(--border-strong);
+  background: var(--bg-card-hover);
+  transform: translateY(-4px);
+}
+
+.sub-work-year {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+}
+
+.sub-work-title {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0.75rem 0;
+}
+
+.sub-work-desc {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.sub-work-footer {
+  margin-top: 1.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 1.25rem;
+}
+
+/* --------------------------------------------------------------------------
+   Education & Honors Section
+   -------------------------------------------------------------------------- */
+.credentials-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+}
+
+.credential-col-title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.credential-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+}
+
+.credential-item {
+  position: relative;
+  padding-left: 1.5rem;
+  border-left: 1px solid var(--border-subtle);
+  transition: border-color 0.3s ease;
+}
+
+.credential-item:hover {
+  border-left-color: var(--text-primary);
+}
+
+.credential-time {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+}
+
+.credential-heading {
+  font-family: var(--font-editorial);
+  font-size: 1.45rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+}
+
+.credential-sub {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   Speaking & Writing Section
+   -------------------------------------------------------------------------- */
+.speaking-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.speaking-media-card {
+  position: relative;
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+}
+
+.speaking-media-card img {
+  width: 100%;
+  height: 520px;
+  object-fit: cover;
+  filter: contrast(110%) grayscale(100%);
+}
+
+.talk-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.talk-item {
+  padding: 1.5rem;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  transition: all 0.3s var(--transition-smooth);
+}
+
+.talk-item:hover {
+  border-color: var(--border-medium);
+  background: var(--bg-card-hover);
+  transform: translateX(6px);
+}
+
+.talk-venue {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+}
+
+.talk-title {
+  font-family: var(--font-editorial);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.talk-desc {
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   Contact & Inquiries Section (Footer)
+   -------------------------------------------------------------------------- */
+.contact-section {
+  padding: 9rem 3.5rem 6rem;
+  background: linear-gradient(180deg, var(--bg-pure) 0%, #040405 100%);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.contact-hero-text {
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 7vw, 7.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-bottom: 3rem;
+  max-width: 1100px;
+}
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 5.5rem;
+  margin-top: 3.5rem;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.contact-channel-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.contact-channel-val {
+  font-family: var(--font-editorial);
+  font-size: 1.85rem;
+  color: var(--text-primary);
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.contact-channel-val:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.contact-form {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.form-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.form-input,
+.form-textarea {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  padding: 1rem 1.25rem;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  border-radius: 2px;
+  outline: none;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.footer-bottom-bar {
+  margin-top: 6rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Modal Systems (Case Study & Contact Dispatch)
+   -------------------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 6, 8, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s var(--transition-smooth);
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-window {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-medium);
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 3.5rem;
+  transform: translateY(20px) scale(0.98);
+  transition: transform 0.4s var(--transition-smooth);
+}
+
+.modal-overlay.active .modal-window {
+  transform: translateY(0) scale(1);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 1.75rem;
+  right: 1.75rem;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.75rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  color: var(--text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Toast Notification
+   -------------------------------------------------------------------------- */
+.toast-msg {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: #ffffff;
+  color: #000000;
+  padding: 1rem 1.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border-radius: 2px;
+  z-index: 2000;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.4s var(--transition-smooth);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+.toast-msg.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Media Queries
+   -------------------------------------------------------------------------- */
+@media (max-width: 1200px) {
+  .about-grid,
+  .speaking-grid,
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+
+  .about-image-frame img,
+  .speaking-media-card img {
+    height: 420px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .main-wrapper {
+    padding-right: 0;
+  }
+
+  .side-nav-container {
+    display: none; /* Replaced by mobile navigation drawer on tablet/phone */
+  }
+
+  .credentials-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .top-header {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .hero-section {
+    padding: 7rem 1.5rem 3rem;
+  }
+
+  .content-section {
+    padding: 5rem 1.5rem;
+  }
+
+  .editorial-title {
+    font-size: clamp(3.8rem, 18vw, 6.5rem);
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .works-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .metrics-strip {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .featured-work-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 2rem 1.5rem;
+  }
+
+  .featured-work-banner {
+    height: 380px;
+  }
+
+  .contact-form {
+    padding: 2rem 1.5rem;
+  }
+}
+
+/* ==========================================================================
+   IRON MAN NANOTECH TRANSFORMATION & HOLOGRAPHIC PREVIEW HUD SYSTEM
+   - Authentic Mark-85 Bleeding Edge nanite assembly animation
+   - Slightly greyed-out tactical preview display
+   - Hexagonal lattice energy wave transitions
+   ========================================================================== */
+
+:root {
+  --nano-cyan: #00f0ff;
+  --nano-cyan-dim: rgba(0, 240, 255, 0.4);
+  --nano-cyan-glow: rgba(0, 240, 255, 0.65);
+  --nano-gold: #ffb703;
+  --nano-red: #e63946;
+  --nano-armor-plate: rgba(10, 11, 18, 0.95);
+}
+
+/* Ambient Nanotech Particle Canvas */
+#nano-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.85;
+}
+
+/* --------------------------------------------------------------------------
+   Floating Nanotech Preview HUD Card
+   "when hovering on buttons, show preview but slightly greyed"
+   -------------------------------------------------------------------------- */
+.nano-preview-hud {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 340px;
+  z-index: 2600;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform, opacity;
+  transform: translate3d(-9999px, -9999px, 0);
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.nano-preview-hud.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.nano-hud-frame {
+  background: var(--nano-armor-plate);
+  border: 1px solid var(--nano-cyan-dim);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 0 35px rgba(0, 240, 255, 0.25), 0 20px 50px rgba(0, 0, 0, 0.9);
+  position: relative;
+  overflow: hidden;
+  padding: 1.25rem;
+}
+
+.nano-hud-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  color: #ffffff;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  cursor: pointer;
+  z-index: 20;
+  transition: all 0.2s ease;
+}
+
+.nano-hud-close:hover {
+  background: var(--nano-red);
+  border-color: var(--nano-red);
+  box-shadow: 0 0 12px var(--nano-red);
+}
+
+/* Nanotech Armor Assembly Animation on HUD appearance */
+.nano-preview-hud.active .nano-hud-frame {
+  animation: nano-materialize 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes nano-materialize {
+  0% {
+    clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+    filter: brightness(2.6) blur(4px) drop-shadow(0 0 30px var(--nano-cyan));
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  35% {
+    clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+    filter: brightness(1.8) drop-shadow(0 0 25px var(--nano-cyan));
+  }
+  75% {
+    clip-path: polygon(8% 0%, 92% 0%, 100% 8%, 100% 92%, 92% 100%, 8% 100%, 0% 92%, 0% 8%);
+    filter: brightness(1.2) drop-shadow(0 0 15px rgba(0, 240, 255, 0.4));
+  }
+  100% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    filter: brightness(1) drop-shadow(0 15px 40px rgba(0, 0, 0, 0.8));
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* High-tech Header */
+.nano-hud-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+}
+
+.nano-hud-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nano-reactor-core {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--nano-cyan);
+  box-shadow: 0 0 12px var(--nano-cyan), 0 0 24px var(--nano-cyan);
+  animation: arc-reactor-pulse 1.8s infinite alternate ease-in-out;
+}
+
+@keyframes arc-reactor-pulse {
+  0% { transform: scale(0.9); opacity: 0.8; box-shadow: 0 0 8px var(--nano-cyan); }
+  100% { transform: scale(1.25); opacity: 1; box-shadow: 0 0 16px var(--nano-cyan), 0 0 28px var(--nano-cyan); }
+}
+
+.nano-hud-code {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--nano-cyan);
+  text-transform: uppercase;
+}
+
+.nano-hud-status {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+/* Slightly Greyed-Out Preview Image Frame */
+.nano-hud-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  background: #000000;
+}
+
+.nano-hud-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* REQUIREMENT: "show preview but slightly greyed" */
+  filter: grayscale(42%) contrast(1.15) brightness(0.9);
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+/* Hexagonal Nanite Mesh Overlay over preview */
+.nano-hex-mesh {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(rgba(0, 240, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(rgba(0, 240, 255, 0.04) 1px, transparent 1px);
+  background-size: 16px 16px, 8px 8px;
+  pointer-events: none;
+}
+
+/* Nanotech Scanning Laser Beam */
+.nano-scanline {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--nano-cyan), transparent);
+  box-shadow: 0 0 12px var(--nano-cyan);
+  opacity: 0.8;
+  animation: nano-scan 2.2s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes nano-scan {
+  0% { top: 0%; opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Tactical Crosshairs */
+.nano-crosshairs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.nano-crosshairs::before,
+.nano-crosshairs::after {
+  content: '';
+  position: absolute;
+  background: rgba(0, 240, 255, 0.35);
+}
+
+.nano-crosshairs::before {
+  top: 50%;
+  left: 10px;
+  right: 10px;
+  height: 1px;
+}
+
+.nano-crosshairs::after {
+  left: 50%;
+  top: 10px;
+  bottom: 10px;
+  width: 1px;
+}
+
+/* Preview Content Body */
+.nano-hud-body {
+  padding-top: 0.85rem;
+}
+
+.nano-hud-target {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--nano-gold);
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+
+.nano-hud-title {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.01em;
+}
+
+.nano-hud-desc {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+
+.nano-hud-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nano-coord {
+  font-size: 0.62rem;
+  font-family: var(--font-sans);
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+
+.nano-action-hint {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--nano-cyan);
+}
+
+/* Nanotech Tactical Corner Reticles */
+.nano-corner-bracket {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-color: var(--nano-cyan);
+  border-style: solid;
+  pointer-events: none;
+}
+
+.nano-corner-bracket.top-left {
+  top: 3px;
+  left: 3px;
+  border-width: 2px 0 0 2px;
+}
+
+.nano-corner-bracket.top-right {
+  top: 3px;
+  right: 3px;
+  border-width: 2px 2px 0 0;
+}
+
+.nano-corner-bracket.bottom-left {
+  bottom: 3px;
+  left: 3px;
+  border-width: 0 0 2px 2px;
+}
+
+.nano-corner-bracket.bottom-right {
+  bottom: 3px;
+  right: 3px;
+  border-width: 0 2px 2px 0;
+}
+
+/* --------------------------------------------------------------------------
+   Iron Man Nanotech Buttons & Hover Shimmer
+   -------------------------------------------------------------------------- */
+.btn-nanotech {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease;
+}
+
+/* Liquid metal nanite laser shimmer across button */
+.btn-nanotech-shimmer {
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(
+    90deg, 
+    transparent 0%, 
+    rgba(0, 240, 255, 0.5) 45%, 
+    rgba(255, 255, 255, 0.95) 50%, 
+    rgba(0, 240, 255, 0.5) 55%, 
+    transparent 100%
+  );
+  transform: skewX(-25deg);
+  pointer-events: none;
+  transition: none;
+}
+
+.btn-nanotech:hover .btn-nanotech-shimmer,
+.btn-nanotech.spotlight-active-target .btn-nanotech-shimmer {
+  animation: nanite-sheen-sweep 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes nanite-sheen-sweep {
+  0% { left: -120%; }
+  100% { left: 220%; }
+}
+
+/* Nanotech Button Hover State */
+.btn-nanotech:hover,
+.btn-nanotech.spotlight-active-target {
+  border-color: var(--nano-cyan) !important;
+  box-shadow: 0 0 25px var(--nano-cyan-glow), 0 0 60px rgba(0, 240, 255, 0.3) !important;
+  transform: translateY(-2px) scale(1.04);
+}
+
+/* Audio SFX Toggle Button */
+.nano-audio-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  padding: 0.4rem 0.85rem;
+  border-radius: 100px;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nano-cyan);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nano-audio-btn:hover {
+  background: rgba(0, 240, 255, 0.18);
+  border-color: var(--nano-cyan);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+}
+
+.nano-audio-btn.muted {
+  color: var(--text-muted);
+  border-color: var(--border-subtle);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Nanotech Word Glitch / Kinetic Assembly */
+.nanotech-word {
+  position: relative;
+  display: inline-block;
+}
+
+.nanotech-word::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--nano-cyan);
+  opacity: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+.hero-section:hover .nanotech-word::after {
+  opacity: 0.7;
+  transform: translateX(2px);
+}

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+  <defs>
+    <!-- Repulsor Cyan Glow -->
+    <filter id="repulsor-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Armored Gauntlet Wrist & Forearm Cuff -->
+  <path d="M12 28 L24 24 L28 34 L15 36 Z" fill="#b30012" stroke="#ff3b4b" stroke-width="0.8"/>
+  <path d="M14 26 L23 23 L25 28 L16 31 Z" fill="#ffd700" stroke="#d49a00" stroke-width="0.6"/>
+
+  <!-- Palm Armor Plate -->
+  <path d="M10 16 L17 11 L25 15 L23 25 L11 26 Z" fill="#d61a29" stroke="#7a000d" stroke-width="0.8"/>
+
+  <!-- Thumb (Armored) -->
+  <path d="M10 18 L4 16 L2 20 L8 23 Z" fill="#b30012" stroke="#ff3b4b" stroke-width="0.8"/>
+  <circle cx="5" cy="18" r="1.5" fill="#ffd700"/>
+
+  <!-- Middle, Ring, Pinky curled fingers -->
+  <path d="M22 14 L28 16 L26 21 L21 19 Z" fill="#a00010" stroke="#e61a29" stroke-width="0.8"/>
+  <path d="M23 19 L27 21 L25 25 L21 23 Z" fill="#8c000e" stroke="#e61a29" stroke-width="0.8"/>
+
+  <!-- Index Pointing Finger (Hotspot points to top-left at x=8, y=2) -->
+  <path d="M13 13 L8 3 L12 2 L17 11 Z" fill="#e61a29" stroke="#ff4d5a" stroke-width="0.8"/>
+  <!-- Gold Knuckle Plates -->
+  <rect x="11" y="6" width="3.5" height="2" transform="rotate(-30 11 6)" fill="#ffd700"/>
+  <circle cx="16" cy="13" r="1.8" fill="#ffd700"/>
+  <circle cx="20" cy="15" r="1.8" fill="#ffd700"/>
+  <circle cx="23" cy="18" r="1.8" fill="#ffd700"/>
+
+  <!-- Glowing Iron Man Palm Repulsor -->
+  <circle cx="17" cy="20" r="4.5" fill="#003b5c" stroke="#00f0ff" stroke-width="1"/>
+  <circle cx="17" cy="20" r="3.2" fill="#00f0ff" filter="url(#repulsor-glow)"/>
+  <circle cx="17" cy="20" r="1.6" fill="#ffffff"/>
+</svg>

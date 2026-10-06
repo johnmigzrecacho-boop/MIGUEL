@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+  <!-- Glow Filter -->
+  <defs>
+    <filter id="iron-red-glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="1.5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Iron Man Crimson Arrow Pointer -->
+  <path d="M4 2 L22 13 L13 15 L8 24 Z" fill="#b30012" stroke="#ff3b4b" stroke-width="1.2" stroke-linejoin="round"/>
+  <!-- Armor facet highlight -->
+  <path d="M4 2 L13 15 L8 24 Z" fill="#e61a29"/>
+  <!-- Gold trim accent -->
+  <path d="M13 15 L22 13 L16 11 Z" fill="#ffd700"/>
+  <!-- Glowing Arc Reactor Core Dot -->
+  <circle cx="9" cy="10" r="2.2" fill="#00f0ff" filter="url(#iron-red-glow)"/>
+  <circle cx="9" cy="10" r="1.1" fill="#ffffff"/>
+</svg>

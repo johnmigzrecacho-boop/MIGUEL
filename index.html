@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <title>MIGUEL — Creative Director, Technologist & Campaign Architect</title>
+  <meta name="description" content="Official portfolio of Miguel. Named to the Creative 100 list as one of the ten most influential campaign makers working in advertising today. Based in London & Madrid.">
+  <meta name="keywords" content="Miguel, Creative Director, Art Direction, Advertising, Central Saint Martins, Semiotics, Nanotech, Campaign Architecture, London, Madrid">
+  
+  <!-- Open Graph / Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MIGUEL — Creative Director & Campaign Architect">
+  <meta property="og:description" content="Miguel was named to the 2024 Creative 100 list as one of the ten most influential campaign makers in modern advertising.">
+  <meta property="og:image" content="assets/rdj_portrait.jpg">
+  
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Ambient Nanotech Energy Particle Canvas -->
+  <canvas id="nano-canvas"></canvas>
+
+  <!-- Full-Screen Iron Man Nanotech Armor Transition Overlay (Fires on Click) -->
+  <div id="nanotech-transition-overlay" class="nanotech-transition-overlay" aria-hidden="true">
+    <div class="nano-shockwave"></div>
+    <div class="nano-hex-matrix"></div>
+    <div class="nano-laser-sweep"></div>
+    <div class="nano-transition-label">MARK-85 // NANITE ARMOR SYNTHESIS</div>
+  </div>
+
+  <!-- Custom Iron Man Repulsor HUD Cursor Follower -->
+  <div id="iron-man-cursor" class="iron-man-cursor">
+    <div class="cursor-repulsor-core"></div>
+    <div class="cursor-reticle"></div>
+    <div class="cursor-rings"></div>
+  </div>
+
+  <!-- Ambient Backdrop when Nanotech HUD is engaged -->
+  <div id="nanotech-backdrop" class="nanotech-backdrop"></div>
+
+  <!-- ========================================================================
+       HOLOGRAPHIC NANOTECH PREVIEW HUD (Iron Man MK-85 Style - Click Triggered)
+       "make it that when i click the buttons, it transitions like a nanotech"
+       ======================================================================== -->
+  <aside id="nano-preview-hud" class="nano-preview-hud" aria-hidden="true">
+    <div class="nano-hud-frame">
+      <button class="nano-hud-close" id="nano-hud-close" aria-label="Close HUD">✕</button>
+
+      <!-- High-tech HUD Header -->
+      <div class="nano-hud-header">
+        <div class="nano-hud-tag">
+          <span class="nano-reactor-core"></span>
+          <span class="nano-hud-code">MARK-85 // NANITE TELEMETRY</span>
+        </div>
+        <span class="nano-hud-status">LINK ENGAGED</span>
+      </div>
+
+      <!-- Preview Image Frame (Slightly greyed out as requested) -->
+      <div class="nano-hud-image-wrapper">
+        <img src="assets/work_campaign.jpg" alt="Preview Thumbnail" class="nano-hud-img" id="nano-preview-img">
+        <div class="nano-hex-mesh"></div>
+        <div class="nano-scanline"></div>
+        <div class="nano-crosshairs"></div>
+      </div>
+
+      <!-- Preview Telemetry Content -->
+      <div class="nano-hud-body">
+        <div class="nano-hud-target" id="nano-preview-target">SECTION // 03 REPERTOIRE</div>
+        <h4 class="nano-hud-title" id="nano-preview-title">FORMA — Urban Rituals AW24</h4>
+        <p class="nano-hud-desc" id="nano-preview-desc">Cannes Lions Grand Prix 2025. Brutalist plaza multimedia billboard campaign.</p>
+        
+        <div class="nano-hud-footer">
+          <span class="nano-coord">COORDS: 51.5074° N · 0.1278° W</span>
+          <button class="btn btn-primary btn-nanotech nano-engage-btn" id="nano-hud-proceed-btn" style="padding: 0.5rem 1.2rem; font-size: 0.72rem;">
+            <span>PROCEED →</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- High-tech Corner Brackets -->
+      <div class="nano-corner-bracket top-left"></div>
+      <div class="nano-corner-bracket top-right"></div>
+      <div class="nano-corner-bracket bottom-left"></div>
+      <div class="nano-corner-bracket bottom-right"></div>
+    </div>
+  </aside>
+
+  <!-- ========================================================================
+       TOP HEADER / STATUS BAR
+       ======================================================================== -->
+  <header class="top-header dimmable" id="top">
+    <div class="brand-badge">
+      <span class="status-dot"></span>
+      <span class="status-text" id="live-city-clock">LONDON 15:20 BST · MADRID STUDIO ACTIVE</span>
+    </div>
+
+    <div class="header-action-group">
+      <!-- Nanotech Audio Sound Toggle -->
+      <button class="nano-audio-btn interactive-target" id="nano-audio-toggle" title="Toggle Iron Man Nanotech SFX Audio" data-preview="audio">
+        <span class="audio-icon">⚡</span>
+        <span class="audio-label">Nano SFX: ON</span>
+      </button>
+
+      <!-- Stark Industries Armor Status Badge -->
+      <div class="nano-status-pill">
+        <span class="mini-dot"></span>
+        <span>Mark-85 Nanite Active</span>
+      </div>
+
+      <nav class="top-nav-links" aria-label="Social Links">
+        <a href="#contact" class="interactive-target" id="quick-mail-btn" data-preview="mail">Mail</a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="interactive-target" data-preview="instagram">Instagram</a>
+        <a href="https://vimeo.com" target="_blank" rel="noopener noreferrer" class="interactive-target" data-preview="vimeo">Vimeo</a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="interactive-target" data-preview="linkedin">LinkedIn</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       STICKY RIGHT SIDE NAVIGATION (Matches Template Preview)
+       ======================================================================== -->
+  <aside class="side-nav-container" aria-label="Section Navigation">
+    <a href="#about" class="side-nav-link interactive-target" id="nav-about" data-preview="about">
+      <span>About</span>
+      <span class="nav-marker"></span>
+    </a>
+    <a href="#skills" class="side-nav-link interactive-target" id="nav-skills" data-preview="skills">
+      <span>Skills</span>
+      <span class="nav-marker"></span>
+    </a>
+    <a href="#work" class="side-nav-link interactive-target" id="nav-work" data-preview="work">
+      <span>Work</span>
+      <span class="nav-marker"></span>
+    </a>
+    <a href="#education" class="side-nav-link interactive-target" id="nav-education" data-preview="education">
+      <span>Education</span>
+      <span class="nav-marker"></span>
+    </a>
+    <a href="#writing" class="side-nav-link interactive-target" id="nav-writing" data-preview="writing">
+      <span>Writing</span>
+      <span class="nav-marker"></span>
+    </a>
+    <a href="#speaking" class="side-nav-link interactive-target" id="nav-speaking" data-preview="speaking">
+      <span>Speaking</span>
+      <span class="nav-marker"></span>
+    </a>
+    <a href="#contact" class="side-nav-link interactive-target" id="nav-contact" data-preview="contact">
+      <span>Contact</span>
+      <span class="nav-marker"></span>
+    </a>
+  </aside>
+
+  <!-- ========================================================================
+       HERO SECTION (Featuring Robert Downey Jr. Coolest Portrait & MIGUEL)
+       ======================================================================== -->
+  <section class="hero-section dimmable" id="hero">
+    <!-- Atmospheric Chiaroscuro Background Portrait of Robert Downey Jr. -->
+    <div class="hero-bg-wrapper">
+      <img src="assets/rdj_portrait.jpg" alt="MIGUEL — Portrayed by Robert Downey Jr." class="hero-bg-image">
+      <!-- Iron Man Mark-85 Arc Reactor Blueprint Overlay Background -->
+      <div class="hero-ironman-blueprint">
+        <img src="assets/ironman-blueprint.svg" alt="Iron Man Mark-85 Arc Reactor Schematic" class="ironman-blueprint-img">
+      </div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-headline">
+        <h1 class="editorial-title">
+          <span class="nanotech-word" data-text="MIGUEL">MIGUEL</span>
+        </h1>
+      </div>
+      
+      <p class="hero-bio-snippet">
+        Miguel was named to the 2024 Creative 100 list, as one of the ten most influential campaign makers working in advertising today.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="#work" class="btn btn-primary interactive-target btn-nanotech" data-preview="work">
+          <span class="btn-nanotech-shimmer"></span>
+          <span>Explore Repertoire</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 13l5 5 5-5M12 4v14"/></svg>
+        </a>
+        <a href="#about" class="btn btn-outline interactive-target btn-nanotech" data-preview="about">
+          <span class="btn-nanotech-shimmer"></span>
+          <span>Read Biography</span>
+        </a>
+        <a href="#contact" class="btn btn-outline interactive-target btn-nanotech" data-preview="contact">
+          <span class="btn-nanotech-shimmer"></span>
+          <span>Initiate Commission</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-bottom-ticker">
+      <span class="ticker-item">Studio London & Madrid</span>
+      <span class="ticker-item">Creative Direction · Semiotics · Campaign Architecture</span>
+      <span class="ticker-item">Stark Industries Tech · Cannes Lions & D&AD</span>
+      <span class="ticker-item">Scroll to Discover ↓</span>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       MAIN WRAPPER FOR SECTIONS
+       ======================================================================== -->
+  <main class="main-wrapper">
+
+    <!-- ======================================================================
+         SECTION 1: ABOUT (Replica & Elevation of Template Preview Image 2)
+         ====================================================================== -->
+    <section class="content-section dimmable" id="about">
+      <!-- Iron Man Blueprint Watermark in Background -->
+      <div class="section-ironman-watermark">
+        <img src="assets/ironman-blueprint.svg" alt="Iron Man Schematic Background" class="ironman-watermark-img">
+      </div>
+
+      <div class="section-inner">
+        <div class="about-grid">
+          <!-- Left Media Column (Atmospheric night gallery photo) -->
+          <div class="about-media-block">
+            <div class="about-image-frame">
+              <img src="assets/about_gallery.jpg" alt="Central Saint Martins Gallery Exhibition London">
+            </div>
+            <div class="about-image-caption">
+              <span class="editorial-caption">CENTRAL SAINT MARTINS — LONDON / UK</span>
+              <span class="editorial-caption">ARCHIVE ARCHITECTURE · REF 01-B</span>
+            </div>
+          </div>
+
+          <!-- Right Editorial Content -->
+          <div class="about-editorial-block">
+            <span class="section-tag">01 / Biography & Trajectory</span>
+            
+            <p class="editorial-quote about-main-text">
+              It may not be obvious, but Miguel studied architecture in Madrid, with a minor in semiotics. Preferring billboards to blueprints, he walked away from a promising studio career to study Communication Design at Central Saint Martins in London.
+            </p>
+
+            <p class="about-sub-narrative">
+              Over the last fourteen years, Miguel has conceived and directed landmark global campaigns, built lasting brand mythologies, and authored spatial identities for cultural institutions and high-concept luxury houses across London, Paris, Tokyo, and New York. His methodology merges structural structuralism with raw human emotional resonance.
+            </p>
+
+            <!-- Metrics Strip -->
+            <div class="metrics-strip">
+              <div class="metric-item">
+                <div class="metric-number">14+</div>
+                <div class="metric-label">Years Creative Direction</div>
+              </div>
+              <div class="metric-item">
+                <div class="metric-number">42</div>
+                <div class="metric-label">International Design Accolades</div>
+              </div>
+              <div class="metric-item">
+                <div class="metric-number">100M+</div>
+                <div class="metric-label">Global Audience Engagement</div>
+              </div>
+            </div>
+
+            <div class="hero-cta-group">
+              <a href="#education" class="btn btn-outline interactive-target btn-nanotech" data-preview="education">
+                <span class="btn-nanotech-shimmer"></span>
+                <span>Academic Pedigree</span>
+              </a>
+              <a href="#contact" class="btn btn-primary interactive-target btn-nanotech" data-preview="monograph">
+                <span class="btn-nanotech-shimmer"></span>
+                <span>Request Full Monograph</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         NANOBOT SWARM WAVE TRANSITION (From About to Skills)
+         "in transition from about to skills (or so), put less light and more of like wave and scrollling of nanobots"
+         ====================================================================== -->
+    <div class="nanobot-wave-transition" id="nanobot-wave-seam">
+      <canvas class="nanobot-stream-canvas" id="nanobot-stream-canvas"></canvas>
+      <div class="nanobot-wave-telemetry">
+        <span class="nano-status-dot"></span>
+        <span class="nano-telemetry-text">SWARM DYNAMICS // MARK-85 NANOBOT WAVE STREAMING</span>
+      </div>
+    </div>
+
+    <!-- ======================================================================
+         SECTION 2: SKILLS & DISCIPLINES
+         ====================================================================== -->
+    <section class="content-section dimmable" id="skills">
+      <div class="section-inner">
+        <div class="skills-header-block">
+          <span class="section-tag">02 / Disciplines & Core Practice</span>
+          <h2 class="skills-main-heading">Synthesizing architectural rigour, semiotics, and commercial intuition.</h2>
+          <p class="about-sub-narrative">
+            Every project operates at the confluence of spatial psychology, typographic precision, and high-impact cinematic storytelling.
+          </p>
+        </div>
+
+        <div class="skills-grid">
+          <!-- Card 1 -->
+          <div class="skill-card dimmable interactive-target" data-preview="skills">
+            <div class="skill-card-top">
+              <span class="skill-index">01 / DIRECTION</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </div>
+            <div>
+              <h3 class="skill-title">Creative & Art Direction</h3>
+              <p class="skill-desc">
+                High-concept global campaign architectures, visual identity frameworks, runway scenography, and comprehensive brand universes.
+              </p>
+            </div>
+            <div class="skill-tags">
+              <span class="skill-tag-pill">Global Campaigns</span>
+              <span class="skill-tag-pill">Scenography</span>
+              <span class="skill-tag-pill">Casting & Mood</span>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="skill-card dimmable interactive-target" data-preview="skills">
+            <div class="skill-card-top">
+              <span class="skill-index">02 / SEMIOTICS</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </div>
+            <div>
+              <h3 class="skill-title">Brand Semiotics & Narrative</h3>
+              <p class="skill-desc">
+                Decoding cultural archetypes and transforming linguistic codes into iconic symbolic narratives for modern audiences.
+              </p>
+            </div>
+            <div class="skill-tags">
+              <span class="skill-tag-pill">Cultural Decoding</span>
+              <span class="skill-tag-pill">Brand Mythology</span>
+              <span class="skill-tag-pill">Subtext Strategy</span>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="skill-card dimmable interactive-target" data-preview="skills">
+            <div class="skill-card-top">
+              <span class="skill-index">03 / SPATIAL</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </div>
+            <div>
+              <h3 class="skill-title">Spatial Architecture & Curation</h3>
+              <p class="skill-desc">
+                Translating two-dimensional brand identities into physical spaces, museum pavilions, experiential flagship retail, and lighting systems.
+              </p>
+            </div>
+            <div class="skill-tags">
+              <span class="skill-tag-pill">Exhibition Pavilions</span>
+              <span class="skill-tag-pill">Lighting Curation</span>
+              <span class="skill-tag-pill">Scale Modeling</span>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="skill-card dimmable interactive-target" data-preview="skills">
+            <div class="skill-card-top">
+              <span class="skill-index">04 / TYPOGRAPHY</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </div>
+            <div>
+              <h3 class="skill-title">Editorial & Typographic Systems</h3>
+              <p class="skill-desc">
+                Custom type design direction, limited-edition hardcover monographs, magazine editorial systems, and bespoke architectural signage.
+              </p>
+            </div>
+            <div class="skill-tags">
+              <span class="skill-tag-pill">Custom Letterforms</span>
+              <span class="skill-tag-pill">Monographs</span>
+              <span class="skill-tag-pill">Print Finishing</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 3: SELECTED WORKS / REPERTOIRE
+         ====================================================================== -->
+    <section class="content-section dimmable" id="work">
+      <div class="section-inner">
+        <span class="section-tag">03 / Selected Repertoire (2022—2026)</span>
+        
+        <!-- Filter Controls -->
+        <div class="work-filter-bar">
+          <button class="work-filter-btn active interactive-target" data-filter="all" data-preview="work">All Repertoire</button>
+          <button class="work-filter-btn interactive-target" data-filter="campaign" data-preview="forma">Global Campaigns</button>
+          <button class="work-filter-btn interactive-target" data-filter="spatial" data-preview="kronos">Spatial & Curation</button>
+          <button class="work-filter-btn interactive-target" data-filter="editorial" data-preview="neobrutal">Editorial & Books</button>
+        </div>
+
+        <!-- Featured Major Project (Urban Brutalist Billboard) -->
+        <div class="featured-work-card dimmable">
+          <div class="featured-work-banner">
+            <img src="assets/work_campaign.jpg" alt="FORMA Urban Rituals Campaign">
+          </div>
+          <div class="featured-work-info">
+            <div>
+              <span class="project-meta-pill">★ Cannes Lions Grand Prix 2025</span>
+              <h3 class="project-title">FORMA — Urban Rituals AW24</h3>
+              <p class="project-summary">
+                A landmark multimedia campaign staged across monumental brutalist concrete architecture. Merging high-fashion tailoring with architectural permanence.
+              </p>
+            </div>
+            <div class="hero-cta-group">
+              <button class="btn btn-primary interactive-target btn-nanotech open-case-study-btn" data-project-id="forma" data-preview="forma">
+                <span class="btn-nanotech-shimmer"></span>
+                <span>View Full Case Study</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional Projects Grid -->
+        <div class="works-grid">
+          <!-- Project 2 -->
+          <div class="sub-work-card dimmable interactive-target open-case-study-btn" data-project-id="kronos" data-category="spatial" data-preview="kronos">
+            <div>
+              <span class="sub-work-year">2024 / VENICE BIENNALE</span>
+              <h4 class="sub-work-title">KRONOS — The Chronometry of Space</h4>
+              <p class="sub-work-desc">
+                An immersive curatorial pavilion examining monolithic stone typologies and temporal light deterioration. Recipient of the ADC Europe Gold Cube.
+              </p>
+            </div>
+            <div class="sub-work-footer">
+              <span class="skill-tag-pill">Spatial Exhibition</span>
+              <span class="btn-text-link">Explore Details →</span>
+            </div>
+          </div>
+
+          <!-- Project 3 -->
+          <div class="sub-work-card dimmable interactive-target open-case-study-btn" data-project-id="aura" data-category="campaign" data-preview="aura">
+            <div>
+              <span class="sub-work-year">2023 / TATE MODERN</span>
+              <h4 class="sub-work-title">AURA — Sound & Matter</h4>
+              <p class="sub-work-desc">
+                Six-month kinetic installation exploring human acoustic vibration against industrial cast iron. Attracted over 450,000 visitors in the Turbine Hall.
+              </p>
+            </div>
+            <div class="sub-work-footer">
+              <span class="skill-tag-pill">Kinetic Installation</span>
+              <span class="btn-text-link">Explore Details →</span>
+            </div>
+          </div>
+
+          <!-- Project 4 -->
+          <div class="sub-work-card dimmable interactive-target open-case-study-btn" data-project-id="forma" data-category="editorial" data-preview="neobrutal">
+            <div>
+              <span class="sub-work-year">2023 / ARCHITECTURAL DIGEST</span>
+              <h4 class="sub-work-title">NEO-BRUTAL — Critical Monograph</h4>
+              <p class="sub-work-desc">
+                A 480-page hardcover design study examining the survival of raw concrete forms in post-industrial digital visual culture.
+              </p>
+            </div>
+            <div class="sub-work-footer">
+              <span class="skill-tag-pill">Editorial Hardcover</span>
+              <span class="btn-text-link">Explore Details →</span>
+            </div>
+          </div>
+
+          <!-- Project 5 -->
+          <div class="sub-work-card dimmable interactive-target open-case-study-btn" data-project-id="forma" data-category="campaign" data-preview="solitude">
+            <div>
+              <span class="sub-work-year">2022 / TOKYO & LONDON</span>
+              <h4 class="sub-work-title">SOLITUDE — Cinema Series & Global OOH</h4>
+              <p class="sub-work-desc">
+                A monochromatic cinematic series and 360-degree billboard intervention exploring isolation in hyper-dense urban megalopolises.
+              </p>
+            </div>
+            <div class="sub-work-footer">
+              <span class="skill-tag-pill">Direction & Film</span>
+              <span class="btn-text-link">Explore Details →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 4: EDUCATION & HONORS
+         ====================================================================== -->
+    <section class="content-section dimmable" id="education">
+      <div class="section-inner">
+        <span class="section-tag">04 / Academic Pedigree & Distinctions</span>
+        
+        <div class="credentials-grid">
+          <!-- Column 1: Academic Pedigree -->
+          <div>
+            <h3 class="credential-col-title">Academic Formation</h3>
+            <div class="credential-list">
+              <div class="credential-item">
+                <div class="credential-time">2012 — 2014 / London, UK</div>
+                <div class="credential-heading">Central Saint Martins (UAL)</div>
+                <div class="credential-sub">MA Communication Design — Awarded Distinction with Dean's Honours for thesis on semiotic branding.</div>
+              </div>
+
+              <div class="credential-item">
+                <div class="credential-time">2006 — 2011 / Madrid, Spain</div>
+                <div class="credential-heading">ETSAM — Madrid School of Architecture</div>
+                <div class="credential-sub">Degree in Architecture & Structural Engineering with formal minor in Applied Semiotics & Spatial Linguistics.</div>
+              </div>
+
+              <div class="credential-item">
+                <div class="credential-time">2016 — PRESENT / Visiting Critic</div>
+                <div class="credential-heading">Royal College of Art & ECAL Lausanne</div>
+                <div class="credential-sub">Invited external juror and masterclass leader for postgraduate visual direction and spatial identity.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: Honors & Accolades -->
+          <div>
+            <h3 class="credential-col-title">Recognition & Honors</h3>
+            <div class="credential-list">
+              <div class="credential-item">
+                <div class="credential-time">2024 / Global Industry Award</div>
+                <div class="credential-heading">Creative 100 Honoree</div>
+                <div class="credential-sub">Recognized as one of the ten most influential campaign makers working in international advertising.</div>
+              </div>
+
+              <div class="credential-item">
+                <div class="credential-time">2023 & 2025 / Cannes, France</div>
+                <div class="credential-heading">Cannes Lions — 3x Grand Prix & 8 Gold Lions</div>
+                <div class="credential-sub">Awarded for Outdoor Scenography, Film Direction, and Brand Experience & Activation.</div>
+              </div>
+
+              <div class="credential-item">
+                <div class="credential-time">2021 — 2024 / London, UK</div>
+                <div class="credential-heading">D&AD — 2 Black Pencils & Jury Foreman</div>
+                <div class="credential-sub">Highest industry honor for typographic excellence and creative campaign architecture.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 5: WRITING & SPEAKING
+         ====================================================================== -->
+    <section class="content-section dimmable" id="writing">
+      <div class="section-inner">
+        <span class="section-tag">05 / Critical Discourse & Keynotes</span>
+
+        <div class="speaking-grid">
+          <!-- Left: Keynote Auditorium Image -->
+          <div class="speaking-media-card">
+            <img src="assets/speaking_stage.jpg" alt="Miguel delivering keynote lecture">
+            <div class="about-image-caption" style="padding: 1rem;">
+              <span class="editorial-caption">DESIGN INDABA KEYNOTE · CAPE TOWN / MILAN</span>
+              <span class="editorial-caption">SESSION REF: L-802</span>
+            </div>
+          </div>
+
+          <!-- Right: Speaking & Essay List -->
+          <div class="talk-list" id="speaking">
+            <div class="talk-item dimmable interactive-target" data-preview="speaking">
+              <div class="talk-venue">Keynote Lecture / Milan Triennale (2025)</div>
+              <h4 class="talk-title">The Semiotics of Desire in Contemporary Commerce</h4>
+              <p class="talk-desc">An inquiry into how luxury visual codes operate in an algorithmic epoch characterized by ephemeral attention spans.</p>
+            </div>
+
+            <div class="talk-item dimmable interactive-target" data-preview="writing">
+              <div class="talk-venue">Published Critical Essay / Eye Magazine #104</div>
+              <h4 class="talk-title">Monoliths in the Feed: Brutalism in Digital Spaces</h4>
+              <p class="talk-desc">Investigating why contemporary creative directors are reverting to raw concrete geometries to anchor brand mythologies.</p>
+            </div>
+
+            <div class="talk-item dimmable interactive-target" data-preview="writing">
+              <div class="talk-venue">Lecture / Architectural Association (London)</div>
+              <h4 class="talk-title">Beyond the Blueprint: Why Architecture Needs Advertising</h4>
+              <p class="talk-desc">A provocative critique on the artificial divide between built structures and transient promotional media.</p>
+            </div>
+
+            <div class="hero-cta-group" style="margin-top: 1rem;">
+              <a href="#contact" class="btn btn-outline interactive-target btn-nanotech" data-preview="speaking">
+                <span class="btn-nanotech-shimmer"></span>
+                <span>Book Keynote Engagement</span>
+              </a>
+              <a href="#contact" class="btn btn-primary interactive-target btn-nanotech" data-preview="writing">
+                <span class="btn-nanotech-shimmer"></span>
+                <span>Read Published Essays</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 6: CONTACT & INQUIRIES
+         ====================================================================== -->
+    <section class="contact-section dimmable" id="contact">
+      <div class="section-inner">
+        <span class="section-tag">06 / Initiate a Conversation</span>
+        
+        <h2 class="contact-hero-text">
+          Let’s build something extraordinary.
+        </h2>
+
+        <div class="contact-layout">
+          <!-- Contact Channels -->
+          <div class="contact-details">
+            <div>
+              <div class="contact-channel-label">Studio Direct Inquiries</div>
+              <a href="mailto:miguel@atelier-miguel.com" class="contact-channel-val interactive-target" data-preview="mail">miguel@atelier-miguel.com</a>
+            </div>
+
+            <div>
+              <div class="contact-channel-label">Telephone / Atelier</div>
+              <a href="tel:+442079460912" class="contact-channel-val interactive-target" data-preview="contact">+44 (0) 20 7946 0912</a>
+            </div>
+
+            <div>
+              <div class="contact-channel-label">Atelier Locations</div>
+              <p class="editorial-quote" style="font-size: 1.35rem; color: var(--text-secondary);">
+                London: 18 Clerkenwell Close, EC1R 0AA<br>
+                Madrid: Calle de Claudio Coello 44, Salamanca
+              </p>
+            </div>
+
+            <div>
+              <div class="contact-channel-label">Curriculum Vitae & Dossier</div>
+              <a href="#" class="btn btn-outline interactive-target btn-nanotech" data-preview="monograph" onclick="showToast('Dossier PDF download initialized (24MB)'); return false;">
+                <span class="btn-nanotech-shimmer"></span>
+                <span>Download Monograph Dossier (PDF)</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Commission Form -->
+          <form class="contact-form" id="commission-form">
+            <div class="form-group">
+              <label for="client-name" class="form-label">Your Name / Organization</label>
+              <input type="text" id="client-name" class="form-input" placeholder="e.g. Elena Rostova / Kvadrat Textiles" required>
+            </div>
+
+            <div class="form-group">
+              <label for="client-email" class="form-label">Email Address</label>
+              <input type="email" id="client-email" class="form-input" placeholder="elena@kvadrat.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="project-type" class="form-label">Project Scope</label>
+              <select id="project-type" class="form-input" style="color: var(--text-primary); background: #16161c;">
+                <option value="campaign">Global Campaign Architecture</option>
+                <option value="creative-direction">Comprehensive Creative Direction</option>
+                <option value="spatial">Spatial Exhibition & Scenography</option>
+                <option value="keynote">Keynote / Masterclass Engagement</option>
+                <option value="advisory">Strategic Brand Advisory</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="client-message" class="form-label">Project Brief & Timeline</label>
+              <textarea id="client-message" class="form-textarea" placeholder="Describe the scale of the commission, anticipated timeframe, and core objectives..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary interactive-target btn-nanotech" data-preview="contact" style="width: 100%;">
+              <span class="btn-nanotech-shimmer"></span>
+              <span>Transmit Commission Brief</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </form>
+        </div>
+
+        <!-- Footer Bottom Bar -->
+        <div class="footer-bottom-bar">
+          <div>© 2026 Miguel. All Rights Reserved.</div>
+          <div>Coded with Pure Vanilla Web Standards · London / Madrid</div>
+          <a href="#top" class="interactive-target" data-preview="top" style="text-decoration: underline;">Back to Top ↑</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       CASE STUDY DETAIL MODAL
+       ======================================================================== -->
+  <div class="modal-overlay" id="case-study-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-window">
+      <button class="modal-close-btn interactive-target" id="modal-close-btn" aria-label="Close modal">✕</button>
+      
+      <div style="margin-bottom: 2rem;">
+        <span class="project-meta-pill" id="modal-project-awards">Cannes Lions Grand Prix 2025</span>
+        <h2 class="editorial-quote" id="modal-project-title" style="font-size: 2.5rem; margin-top: 0.5rem;">FORMA — Urban Rituals AW24</h2>
+      </div>
+
+      <div style="margin-bottom: 2.5rem; border: 1px solid var(--border-subtle); overflow: hidden;">
+        <img id="modal-project-image" src="assets/work_campaign.jpg" alt="Case Study Hero" style="width: 100%; height: 380px; object-fit: cover;">
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-subtle); margin-bottom: 2rem;">
+        <div>
+          <span class="editorial-caption">Client</span>
+          <p id="modal-project-client" style="font-weight: 600; color: var(--text-primary); margin-top: 0.25rem;">FORMA Luxury House</p>
+        </div>
+        <div>
+          <span class="editorial-caption">Timeline</span>
+          <p id="modal-project-year" style="font-weight: 600; color: var(--text-primary); margin-top: 0.25rem;">2025/2026</p>
+        </div>
+        <div>
+          <span class="editorial-caption">Disciplines</span>
+          <p id="modal-project-role" style="font-weight: 600; color: var(--text-primary); margin-top: 0.25rem;">Campaign Architecture</p>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 2rem;">
+        <h4 style="font-family: var(--font-heading); font-size: 1.15rem; margin-bottom: 0.75rem;">Brief & Strategic Narrative</h4>
+        <p id="modal-project-brief" style="color: var(--text-secondary); line-height: 1.7; font-size: 1rem;">
+          Detailed project brief content.
+        </p>
+      </div>
+
+      <div style="margin-bottom: 2.5rem;">
+        <h4 style="font-family: var(--font-heading); font-size: 1.15rem; margin-bottom: 0.75rem;">Key Atelier Deliverables</h4>
+        <ul id="modal-project-deliverables" style="color: var(--text-secondary); padding-left: 1.25rem; line-height: 1.8;">
+          <li>Global outdoor billboard system</li>
+        </ul>
+      </div>
+
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <a href="#contact" class="btn btn-primary interactive-target btn-nanotech" data-preview="contact" onclick="document.getElementById('modal-close-btn').click();">
+          <span class="btn-nanotech-shimmer"></span>
+          <span>Commission Similar Project</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
